@@ -4,7 +4,7 @@ import (
 	"net"
 	"sync"
 
-	"gigawatt-server/pkg/errorlib"
+	"gigawatt-common/pkg/errorlib"
 )
 
 type (
