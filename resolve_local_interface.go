@@ -10,13 +10,16 @@ import (
 
 // ResolveLocalInterface takes an address string or regular expression and
 // resolves/locates/validates it as a local IP address.  May also be a regular
-// expression [e.g. '192.168.*'].
-// If bind parameter is empty the first address NOT matching 127.* will be
-// returned.
+// expression (e.g. "192.168.*").
+// If bind parameter is empty, "0.0.0.0" or "0:0:0:0:0:0:0:0" the first address
+// NOT matching 127.* will be returned.
 func ResolveLocalInterface(bind string) (net.IP, error) {
-	var expr *regexp.Regexp
+	var (
+		expr        *regexp.Regexp
+		bindHasSpec bool = bind != "" && bind != "0.0.0.0" && bind != "0:0:0:0:0:0:0:0"
+	)
 
-	if bind != "" {
+	if bindHasSpec {
 		log.Info("Locating bind network interface with IP address matching %q", bind)
 		var err error
 		if expr, err = regexp.Compile(bind); err != nil {
@@ -44,7 +47,7 @@ func ResolveLocalInterface(bind string) (net.IP, error) {
 				ip = v.IP
 			}
 			ipStr := ip.String()
-			if bind != "" && (bind == ipStr || expr.MatchString(ipStr)) {
+			if bindHasSpec && (bind == ipStr || expr.MatchString(ipStr)) {
 				log.Info("Successfully verified bind IP address=%v", ipStr)
 				return ip, nil
 			}
