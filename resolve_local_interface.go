@@ -16,7 +16,7 @@ import (
 func ResolveLocalInterface(bind string) (net.IP, error) {
 	var (
 		expr        *regexp.Regexp
-		bindHasSpec bool = bind != "" && bind != "0.0.0.0" && bind != "0:0:0:0:0:0:0:0"
+		bindHasSpec bool = bind != "" && bind != "[::]" && bind != "0.0.0.0" && bind != "0:0:0:0:0:0:0:0"
 	)
 
 	if bindHasSpec {

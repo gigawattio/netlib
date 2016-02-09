@@ -36,8 +36,17 @@ func TestResolveLocalInterface(t *testing.T) {
 			t.Errorf("Expected automatic interface resolution to succeed but got err=%T/%s", err, err)
 		}
 
+		res3, err := ResolveLocalInterface("[::]")
+		if err != nil {
+			t.Errorf("Expected automatic interface resolution to succeed but got err=%T/%s", err, err)
+		}
+
 		if !reflect.DeepEqual(res1, res2) {
 			t.Errorf("Expected res1(%v) == res2(%v), but they differed", res1, res2)
+		}
+
+		if !reflect.DeepEqual(res1, res3) {
+			t.Errorf("Expected res1(%v) == res3(%v), but they differed", res1, res3)
 		}
 	}
 }
