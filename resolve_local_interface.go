@@ -23,7 +23,7 @@ func ResolveLocalInterface(bind string) (net.IP, error) {
 		log.Info("Locating bind network interface with IP address matching %q", bind)
 		var err error
 		if expr, err = regexp.Compile(bind); err != nil {
-			return nil, fmt.Errorf("compiling bind address expression: %s", err)
+			return nil, fmt.Errorf("compiling bind address expression %q: %s", bind, err)
 		}
 	} else {
 		log.Info("Auto-detecting bind IP address..")
