@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+var (
+	NoAddressFoundError = errors.New("no usable ip address found")
+)
+
 // ResolveLocalInterface takes an address string or regular expression and
 // resolves/locates/validates it as a local IP address.  May also be a regular
 // expression (e.g. "192.168.*").
@@ -60,5 +64,5 @@ func ResolveLocalInterface(bind string) (net.IP, error) {
 			}
 		}
 	}
-	return nil, errors.New("no usable ip address found")
+	return nil, NoAddressFoundError
 }
