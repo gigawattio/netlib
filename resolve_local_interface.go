@@ -20,7 +20,7 @@ var (
 func ResolveLocalInterface(bind string) (net.IP, error) {
 	var (
 		expr        *regexp.Regexp
-		bindHasSpec bool = bind != "" && bind != "[::]" && bind != "0.0.0.0" && bind != "0:0:0:0:0:0:0:0"
+		bindHasSpec bool = !IsEmptyBindSpec(bind)
 	)
 
 	if bindHasSpec {
@@ -65,4 +65,9 @@ func ResolveLocalInterface(bind string) (net.IP, error) {
 		}
 	}
 	return nil, NoAddressFoundError
+}
+
+func IsEmptyBindSpec(bind string) bool {
+	isEmtpy := bind == "" || bind == "[::]" || bind == "0.0.0.0" || bind == "0:0:0:0:0:0:0:0"
+	return isEmtpy
 }

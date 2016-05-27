@@ -50,3 +50,33 @@ func TestResolveLocalInterface(t *testing.T) {
 		}
 	}
 }
+
+func TestIsEmptyBindSpec(t *testing.T) {
+	testCases := []struct {
+		bind        string
+		expectEmpty bool
+	}{
+		{
+			bind:        "0.0.0.0",
+			expectEmpty: true,
+		},
+		{
+			bind:        "[::]",
+			expectEmpty: true,
+		},
+		{
+			bind:        "0:0:0:0:0:0:0:0",
+			expectEmpty: true,
+		},
+		{
+			bind:        "127.0.0.1",
+			expectEmpty: false,
+		},
+	}
+
+	for i, testCase := range testCases {
+		if expected, actual := testCase.expectEmpty, IsEmptyBindSpec(testCase.bind); actual != expected {
+			t.Errorf("[i=%v/testCase=%+v] Expected bind=%v empty=%v but actual=%v", i, testCase, testCase.bind, expected, actual)
+		}
+	}
+}
