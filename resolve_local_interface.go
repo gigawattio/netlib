@@ -17,7 +17,7 @@ var (
 // expression (e.g. "192.168.*").
 // If bind parameter is empty, "0.0.0.0" or "0:0:0:0:0:0:0:0" the first address
 // NOT matching 127.* will be returned.
-func ResolveLocalInterface(bind string) (net.IP, error) {
+func ResolveLocalInterface(bind string, excludeIps ...string) (net.IP, error) {
 	var (
 		expr        *regexp.Regexp
 		bindHasSpec bool = !IsEmptyBindSpec(bind)
@@ -55,7 +55,7 @@ func ResolveLocalInterface(bind string) (net.IP, error) {
 				log.Info("Successfully verified bind IP address=%v", ipStr)
 				return ip, nil
 			}
-			if strings.HasPrefix(ipStr, "127.") || strings.Contains(ipStr, "::") {
+			if strings.HasPrefix(ipStr, "127.") || strings.Contains(ipStr, "::") || (len(excludeIps) > 0 && strings.Contains(strings.Join(excludeIps, " ")+" ", ipStr+" ")) {
 				continue
 			}
 			if expr == nil {

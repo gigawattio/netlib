@@ -48,6 +48,15 @@ func TestResolveLocalInterface(t *testing.T) {
 		if !reflect.DeepEqual(res1, res3) {
 			t.Errorf("Expected res1(%v) == res3(%v), but they differed", res1, res3)
 		}
+
+		res4, err := ResolveLocalInterface("", res1.String())
+		// NB: An error here may not mean anything; for example if there was only 1
+		// interface from res1 then none will be found.
+		if err == nil {
+			if reflect.DeepEqual(res1, res4) {
+				t.Errorf("Expected res4=%v to be different from res1=%v", res4, res1)
+			}
+		}
 	}
 }
 
