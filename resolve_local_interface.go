@@ -6,6 +6,8 @@ import (
 	"net"
 	"regexp"
 	"strings"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 var (
@@ -24,7 +26,7 @@ func ResolveLocalInterface(bind string, excludeIps ...string) (net.IP, error) {
 	)
 
 	if bindHasSpec {
-		log.Info("Locating bind network interface with IP address matching %q", bind)
+		log.Infof("Locating bind network interface with IP address matching %q", bind)
 		var err error
 		if expr, err = regexp.Compile(bind); err != nil {
 			return nil, fmt.Errorf("compiling bind address expression %q: %s", bind, err)
@@ -52,14 +54,14 @@ func ResolveLocalInterface(bind string, excludeIps ...string) (net.IP, error) {
 			}
 			ipStr := ip.String()
 			if bindHasSpec && (bind == ipStr || expr.MatchString(ipStr)) {
-				log.Info("Successfully verified bind IP address=%v", ipStr)
+				log.Infof("Successfully verified bind IP address=%v", ipStr)
 				return ip, nil
 			}
 			if strings.HasPrefix(ipStr, "127.") || strings.Contains(ipStr, "::") || (len(excludeIps) > 0 && strings.Contains(strings.Join(excludeIps, " ")+" ", ipStr+" ")) {
 				continue
 			}
 			if expr == nil {
-				log.Info("Auto-detected bind IP address=%v", ipStr)
+				log.Infof("Auto-detected bind IP address=%v", ipStr)
 				return ip, nil
 			}
 		}

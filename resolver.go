@@ -4,7 +4,7 @@ import (
 	"net"
 	"sync"
 
-	"gigawatt-common/pkg/errorlib"
+	"github.com/gigawattio/errorlib"
 )
 
 type DnsResolution struct {

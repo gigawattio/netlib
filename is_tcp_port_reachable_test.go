@@ -3,8 +3,8 @@ package netlib_test
 import (
 	"testing"
 
-	"gigawatt-common/pkg/netlib"
-	"gigawatt-common/pkg/web"
+	"github.com/gigawattio/netlib"
+	"github.com/gigawattio/web"
 )
 
 func TestIsTcpPortReachable(t *testing.T) {
