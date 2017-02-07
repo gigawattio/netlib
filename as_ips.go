@@ -54,7 +54,7 @@ func AsIps(hostnamePortPairs ...string) ([]string, error) {
 			}
 		}
 	}
-	if len(final) == 0 && n != 0 {
+	if n != 0 && len(final) == 0 {
 		return nil, errors.New("AsIps: 0 ips were found in the bulk-dns-resolution result")
 	}
 	if err := resolutions.AnyErrors(); err != nil {

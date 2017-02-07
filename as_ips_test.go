@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_AsIps(t *testing.T) {
+func TestAsIps(t *testing.T) {
 	var (
 		input = []string{
 			"localhost",
