@@ -57,7 +57,7 @@ func ResolveLocalInterface(bind string, excludeIps ...string) (net.IP, error) {
 				log.Infof("Successfully verified bind IP address=%v", ipStr)
 				return ip, nil
 			}
-			if strings.HasPrefix(ipStr, "127.") || strings.Contains(ipStr, "::") || (len(excludeIps) > 0 && strings.Contains(strings.Join(excludeIps, " ")+" ", ipStr+" ")) {
+			if strings.HasPrefix(ipStr, "127.") || strings.HasPrefix(ipStr, "169.254.") || strings.Contains(ipStr, "::") || (len(excludeIps) > 0 && strings.Contains(strings.Join(excludeIps, " ")+" ", ipStr+" ")) {
 				continue
 			}
 			if expr == nil {
