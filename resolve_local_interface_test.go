@@ -12,7 +12,7 @@ func TestResolveLocalInterface(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		} else if actual := ip.String(); actual != expected {
-			t.Errorf("Expected ResolveLocalInterface(%q) = %q but actual = %q", expected, actual)
+			t.Errorf("Expected ResolveLocalInterface(%q) = %q but actual = %q", expected, expected, actual)
 		}
 	}
 
